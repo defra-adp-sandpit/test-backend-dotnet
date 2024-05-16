@@ -1,0 +1,10 @@
+services:
+  test-backend-dotnet:
+    build:
+      context: .
+      target: production
+    image: test-backend-dotnet
+    container_name: test-backend-dotnet
+    environment:
+      AppInsights__ConnectionString: ${APPINSIGHTS_CONNECTIONSTRING}
+      AppInsights__CloudRole: test-backend-dotnet-local

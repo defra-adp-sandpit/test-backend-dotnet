@@ -1,0 +1,24 @@
+services:
+  test-backend-dotnet-core-tests:
+    build:
+      target: development
+    image: test-backend-dotnet-core-tests-development
+    container_name: test-backend-dotnet-core-tests
+    user: root
+    entrypoint: sh -c "cd /home/dotnet && chown -R dotnet:dotnet . && su dotnet -c 'dotnet watch --project test/Test.Backend.Dotnet.Core.Tests/Test.Backend.Dotnet.Core.Tests.csproj test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=./test-output/'"
+    volumes:
+      - ./src/Test.Backend.Dotnet.Core:/home/dotnet/src/Test.Backend.Dotnet.Core
+      - ./test/Test.Backend.Dotnet.Core.Tests:/home/dotnet/test/Test.Backend.Dotnet.Core.Tests
+      - ./test-output:/home/dotnet/Test.Backend.Dotnet.Core.Tests/test-output
+
+  test-backend-dotnet-api-tests:
+    build:
+      target: development
+    image: test-backend-dotnet-api-tests-development
+    container_name: test-backend-dotnet-api-tests
+    user: root
+    entrypoint: sh -c "cd /home/dotnet && chown -R dotnet:dotnet . && su dotnet -c 'dotnet watch --project test/Test.Backend.Dotnet.Api.Tests/Test.Backend.Dotnet.Api.Tests.csproj test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=./test-output/'"
+    volumes:
+      - ./src/Test.Backend.Dotnet.Api:/home/dotnet/src/Test.Backend.Dotnet.Api
+      - ./test/Test.Backend.Dotnet.Api.Tests:/home/dotnet/test/Test.Backend.Dotnet.Api.Tests
+      - ./test-output:/home/dotnet/Test.Backend.Dotnet.Api.Tests/test-output
